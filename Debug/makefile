@@ -34,14 +34,14 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Project2
+BUILD_ARTIFACT_NAME := Project3
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 LSS += \
-Project2.lss \
+Project3.lss \
 
 SIZEDUMMY += \
 sizedummy \
@@ -51,31 +51,31 @@ sizedummy \
 all: main-build
 
 # Main-build Target
-main-build: Project2.elf secondary-outputs
+main-build: Project3.elf secondary-outputs
 
 # Tool invocations
-Project2.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+Project3.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,Project2.map -mmcu=atmega16 -o "Project2.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,Project3.map -mmcu=atmega16 -o "Project3.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-Project2.lss: Project2.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+Project3.lss: Project3.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S Project2.elf  >"Project2.lss"
+	-avr-objdump -h -S Project3.elf  >"Project3.lss"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-sizedummy: Project2.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+sizedummy: Project3.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega16 Project2.elf
+	-avr-size --format=avr --mcu=atmega16 Project3.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) Project2.elf
+	-$(RM) $(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) Project3.elf
 	-@echo ' '
 
 secondary-outputs: $(LSS) $(SIZEDUMMY)
